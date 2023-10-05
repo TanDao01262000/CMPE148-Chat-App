@@ -1,20 +1,52 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views import generic
-
+from .forms import UserRegisterForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
 # Create your views here.
 
-class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'registration/signup.html'
+def loginView(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user:
+            print('LOGIN')
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Username or password is incorrect!!')
+    context = {}
+    return render(request, 'main_app/login.html', context)
 
 
+def logoutView(request):
+    logout(request)
+    return redirect('login')
 
 
-@login_required
+def signup(request):
+    form = UserRegisterForm()
+    
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {user}!')
+            return redirect('login')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'Error in {field}: {error}')
+
+
+    context = {'form':form}
+    return render(request, 'main_app/signup.html',  context)
+
+
+# @login_required
 def home(request):
-    return render(request, 'registration/home.html')
+    return render(request, 'main_app/home.html')
  
