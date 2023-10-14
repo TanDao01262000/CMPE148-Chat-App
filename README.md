@@ -34,17 +34,6 @@ Before running this application, ensure you have the following prerequisites ins
 
 ## Getting Started
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/chat-app.git
-
-- Django
-- Channels
-- Redis (for WebSocket support)
-
-## Getting Started
-
 1. Clone and setup
     1. Clone the project's repository
         Run ``git clone https://github.com/your-username/chat-app.git``
