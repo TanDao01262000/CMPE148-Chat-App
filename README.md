@@ -18,16 +18,18 @@ This is a simple real-time chat application built by Potato Power Team using Dja
 - Simple and intuitive user interface.
 
 ## Technologies Used
-
-- Django Channels
-- Django for the backend
-- HTML, CSS, and Vanilla JavaScript for the frontend
+  - [Django](https://www.djangoproject.com/)
+  - [Python](https://www.python.org/)
+  - [HTML5](https://html.spec.whatwg.org/)
+  - [CSS](https://www.w3.org/Style/CSS/)
+  - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+  - [sqlite](https://www.sqlite.org/index.html)
 
 ## Prerequisites
 
 Before running this application, ensure you have the following prerequisites installed:
 
-- Python 3.x
+- Python 3.9 or higher
 - Django
 - Channels
 - Redis (for WebSocket support)
