@@ -51,3 +51,9 @@ Before running this application, ensure you have the following prerequisites ins
                 ``source <env_name>/bin/activate`` for Unix or Linux
         4. Install dependencies 
             ``pip install -r requirements.txt``
+       5. Run the application:
+        > **Note:** Make sure you are in the folder contains the file called "manage.py"
+      
+        ```sh
+          python manage.py runserver
+        ```
