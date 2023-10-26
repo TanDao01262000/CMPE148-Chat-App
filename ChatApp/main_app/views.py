@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+
+
 # Create your views here.
 
 def loginView(request):
@@ -28,7 +30,7 @@ def logoutView(request):
 
 def signup(request):
     form = UserRegisterForm()
-    
+
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -41,12 +43,17 @@ def signup(request):
                 for error in errors:
                     messages.error(request, f'Error in {field}: {error}')
 
+    context = {'form': form}
+    return render(request, 'main_app/signup.html', context)
 
-    context = {'form':form}
-    return render(request, 'main_app/signup.html',  context)
+
+def index(request):
+    return render(request, "main_app/index.html")
 
 
 # @login_required
 def home(request):
-    return render(request, 'main_app/home.html')
- 
+    return render(request, 'main_app/index.html')
+
+def room(request, room_name):
+    return render(request, "main_app/room.html", {"room_name": room_name})
