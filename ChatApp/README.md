@@ -29,31 +29,40 @@ This is a simple real-time chat application built by Potato Power Team using Dja
 
 Before running this application, ensure you have the following prerequisites installed:
 
+- Docker
 - Python 3.9 or higher
 - Django
 - Channels
-- Redis (for WebSocket support)
 
 ## Getting Started
 
 1. Clone and setup
+
     1. Clone the project's repository
         Run ``git clone https://github.com/your-username/chat-app.git``
+
     2. Set up a virtual environment
         1. Install "virtualenv" library
             Run ``pip install virtualenv``
+
         2. Create a virtual environment
             ``virtualenv <env_name>`` (replace <env_name> with the name you'd like to give to your virtual environment)
+
         3. Activate the virtual environment by running the following command:
         
                ``<env_name>\Scripts\activate`` for Window
 
                 ``source <env_name>/bin/activate`` for Unix or Linux
+
         4. Install dependencies 
             ``pip install -r requirements.txt``
-       5. Run the application:
-        > **Note:** Make sure you are in the folder contains the file called "manage.py"
+
+        5. Run Redis Server:
+            ``` docker run --rm -p 6379:6379 redis:7``` 
+
+        6. Run the application:
+        > **Note:** Make sure you are in the folder contains the file "manage.py"
       
-        ```sh
+        ```
           python manage.py runserver
         ```
