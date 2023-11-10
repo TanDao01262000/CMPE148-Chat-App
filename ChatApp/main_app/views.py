@@ -5,7 +5,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 
 
-# Create your views here.
+def frontpage(request):
+    return render(request, 'main_app/base.html')
 
 def loginView(request):
     if request.method == 'POST':
@@ -16,7 +17,7 @@ def loginView(request):
         if user:
             print('LOGIN')
             login(request, user)
-            return redirect('home')
+            return redirect('room')
         else:
             messages.error(request, 'Username or password is incorrect!!')
     context = {}
@@ -57,3 +58,4 @@ def home(request):
 
 def room(request, room_name):
     return render(request, "main_app/room.html", {"room_name": room_name})
+
