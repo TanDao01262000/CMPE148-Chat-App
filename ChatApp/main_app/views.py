@@ -5,9 +5,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 
 
-def frontpage(request):
-    return render(request, 'main_app/base.html')
-
 def loginView(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -17,7 +14,7 @@ def loginView(request):
         if user:
             print('LOGIN')
             login(request, user)
-            return redirect('room')
+            return redirect('home')
         else:
             messages.error(request, 'Username or password is incorrect!!')
     context = {}
@@ -56,6 +53,5 @@ def index(request):
 def home(request):
     return render(request, 'main_app/index.html')
 
-def room(request, room_name):
-    return render(request, "main_app/room.html", {"room_name": room_name})
+
 
