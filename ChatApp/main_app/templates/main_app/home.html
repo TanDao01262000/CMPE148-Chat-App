@@ -1,13 +1,9 @@
-{% extends "main_app/base.html" %}
+{% extends 'main_app/base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Welcome | {% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
-{% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Log In</a>
-{% endif %}
+<div class="p-10 lg:p-20 text-center">
+    <h1 class="text-3xl lg:text-6xl text-white">Djangochat</h1>
+</div>
 {% endblock %}
