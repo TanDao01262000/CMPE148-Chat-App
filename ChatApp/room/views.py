@@ -10,9 +10,9 @@ def rooms(request):
     return render(request, 'room/rooms.html', {'rooms': rooms})
 
 @login_required
-def room(request, name):
+def room(request, room_name):
     try:
-        room = get_object_or_404(Room, name=name)
+        room = get_object_or_404(Room, name=room_name)
         return render(request, 'room/room.html', {'room': room})
     except:
         return render(request, 'room/404.html')
