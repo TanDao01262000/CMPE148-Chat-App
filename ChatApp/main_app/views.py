@@ -5,8 +5,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 
 
-# Create your views here.
-
 def loginView(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -55,5 +53,5 @@ def index(request):
 def home(request):
     return render(request, 'main_app/index.html')
 
-def room(request, room_name):
-    return render(request, "main_app/room.html", {"room_name": room_name})
+
+

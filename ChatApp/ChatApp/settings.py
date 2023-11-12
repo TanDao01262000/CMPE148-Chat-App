@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+LOGOUT_REDIRECTED_URL = '/'
+LOGIN_REDIRECTED_URL = '/rooms/'
+LOGIN_URL ='/login/'
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
 
     'channels',
     'main_app',
+    'room',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +86,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        "TEST" : {
+            "NAME" : BASE_DIR / "db.sqlite3",
+        },
     }
 }
 
