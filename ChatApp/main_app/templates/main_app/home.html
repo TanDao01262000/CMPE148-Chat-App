@@ -4,6 +4,54 @@
 
 {% block content %}
 <div class="p-10 lg:p-20 text-center">
-    <h1 class="text-3xl lg:text-6xl text-white">Djangochat</h1>
+    <h1 class="text-3xl lg:text-6xl text-white mb-5">Welcome to DChat! </h1>
+
+<div class="card bg-dark text-white shadow-lg my-5">
+    {% if user.is_authenticated %}
+    
+    <div class="form-group">
+            <input id="room-name-input" type="text" class="form-control mb-3" placeholder="Enter room name..."><br>
+            <button id="room-name-submit" class="px-2 py-2 rounded-xl text-white bg-green-600 hover:bg-green-700">Enter</button>
+        </div>
+    <h1 class="text-3xl lg:text-6xl text-black my-5">OR</h1>
+
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a href="{% url 'room_app:rooms' %}" type="button" class="px-3 py-3 rounded-xl text-white bg-green-600 hover:bg-green-700">Rooms</a>
+        <a type="button" class="px-3 py-3 my-5 mx-5 rounded-xl text-white bg-green-600 hover:bg-green-700">Open your own room</a>
+    </div>
+    </div>
+    {% else %}
+        <div class="card bg-dark text-white shadow-lg my-5">
+            <div class="card-body">
+                <p class="text-3xl lg:text-3xl mb-5 ">Login to use the app</p>
+            </div>
+            <form method=""></form>
+        </div>
+    {% endif %}
+
+
+
+    <script>
+        document.querySelector('#room-name-input').focus();
+        document.querySelector('#room-name-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#room-name-submit').click();
+            }
+        };
+
+        document.querySelector('#room-name-submit').onclick = function(e) {
+            var roomName = document.querySelector('#room-name-input').value;
+            if (roomName) {
+                // Perform a check here if the room exists
+                // For now, this redirects to the room URL
+                window.location.pathname = '/rooms/' + roomName;
+            } else {
+                // Display an error message or handle the error
+                alert('Room name is required.'); // Example error handling
+            }
+        };
+    </script>
+
 </div>
 {% endblock %}

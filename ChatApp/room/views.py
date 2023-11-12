@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Room
 
 from .models import Room
 
@@ -9,6 +10,9 @@ def rooms(request):
     return render(request, 'room/rooms.html', {'rooms': rooms})
 
 @login_required
-def room(request, slug):
-    room = Room.objects.get(slug=slug)
-    return render(request, 'room/room.html', {'room':room})
+def room(request, name):
+    try:
+        room = get_object_or_404(Room, name=name)
+        return render(request, 'room/room.html', {'room': room})
+    except:
+        return render(request, 'room/404.html')
