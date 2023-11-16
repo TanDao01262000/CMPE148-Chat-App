@@ -8,26 +8,13 @@
 </div>
 
 <div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-    <div class="chat-messages space-y-3" id="chat-messages">
-        <div class="p-4 bg-gray-200 rounded-xl">
-            <p class="font-semibold">Username</p>
-            <p>The message lorem ipsum</p>
-        </div>
-        <div class="p-4 bg-gray-200 rounded-xl">
-            <p class="font-semibold">Username</p>
-            <p>The message lorem ipsum</p>
-        </div>
-        <div class="p-4 bg-gray-200 rounded-xl">
-            <p class="font-semibold">Username</p>
-            <p>The message lorem ipsum</p>
-        </div>
-    </div>
+    <textarea class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-black rounded-xl" id="chat-log" cols="124" rows="20"></textarea><br>
 
-
-        <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
+    
+    <input class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-black rounded-xl" id="chat-message-input" type="text" size="122"><br>
     <input id="chat-message-submit" type="button" value="Send">
     {{ room.name|json_script:"room-name" }}
+    {{ request.user.username|json_script:"user-name" }}
 </div>
 
 
@@ -37,6 +24,7 @@
 {% block scripts %}
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        const userName = JSON.parse(document.getElementById('user-name').textContent);
 
         const chatSocket = new WebSocket(
             'ws://'
@@ -48,7 +36,7 @@
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
+            document.querySelector('#chat-log').value += (data.username + ':' + data.message + '\n');
         };
 
         chatSocket.onclose = function(e) {
@@ -66,7 +54,10 @@
             const messageInputDom = document.querySelector('#chat-message-input');
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
-                'message': message
+                'message': message,
+                'username': userName,
+                'room': roomName,
+
             }));
             messageInputDom.value = '';
         };
