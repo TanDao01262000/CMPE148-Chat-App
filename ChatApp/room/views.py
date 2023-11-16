@@ -16,3 +16,7 @@ def room(request, room_name):
         return render(request, 'room/room.html', {'room': room})
     except:
         return render(request, 'room/404.html')
+
+
+
+# docker run --rm -p 6379:6379 redis:7
