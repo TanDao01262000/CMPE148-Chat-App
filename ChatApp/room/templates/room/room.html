@@ -7,16 +7,31 @@
     <h1 class="text-3xl lg:text-6xl text-white">Room: {{room.name}}</h1>
 </div>
 
-<div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-    <textarea class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-black rounded-xl" id="chat-log" cols="124" rows="20"></textarea><br>
+<div class="lg:w-2/3 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
+    <div class="bg- chat-messages space-y-3" id="chat-messages">
+        {% for m in messages %}
+            <div class="message">
+                <b>{{ m.user.username }}</b>: <br>{{ m.content }}
+            </div>
+        {% endfor %}
+    </div>
 
-    
-    <input class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-black rounded-xl" id="chat-message-input" type="text" size="122"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    {{ room.name|json_script:"room-name" }}
-    {{ request.user.username|json_script:"user-name" }}
+
 </div>
 
+<div class="lg:w-2/3 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
+    <input class="border-5" id="chat-message-input" type="text" size="100%"><br>
+    <input type="button" class="btn btn-primary" id="chat-message-submit" value="Send">
+
+</div>
+
+
+
+
+
+
+    {{ room.name|json_script:"room-name" }}
+    {{ request.user.username|json_script:"user-name" }}
 
 {% endblock %}
 
@@ -36,11 +51,21 @@
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.username + ':' + data.message + '\n');
+
+            if (data.message) {
+                let messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.innerHTML = '<b>' + data.username + '</b>: ' + '<br>' + data.message;
+                document.querySelector('#chat-messages').appendChild(messageDiv);
+            } else {
+                alert('The message was empty!');
+            }
+
+        scrollToBottom();
         };
 
         chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
+            console.error('Error Occurs. DISCONNECT');
         };
 
         document.querySelector('#chat-message-input').focus();
@@ -53,13 +78,67 @@
         document.querySelector('#chat-message-submit').onclick = function(e) {
             const messageInputDom = document.querySelector('#chat-message-input');
             const message = messageInputDom.value;
+            
+        if (message) {
             chatSocket.send(JSON.stringify({
                 'message': message,
                 'username': userName,
                 'room': roomName,
-
             }));
+
             messageInputDom.value = '';
-        };
+        } else {
+            // Optionally, you can alert the user or handle this case differently
+            alert('Please enter a message.');
+        }
+    }
+
+    function scrollToBottom() {
+        let objDiv = document.getElementById("chat-messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+    scrollToBottom();
+
     </script>
+    <style>
+    /* Adjust this value according to your layout */
+    #chat-messages {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    }   
+
+    #chat-message-input {
+    border: 2px solid #ccc; /* Adjust color and thickness as needed */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px; /* Some padding inside the input box */
+    width: 95%; /* Adjust width as needed, considering padding and borders */
+    margin: 10px 0; /* Space above and below the input field */
+}
+
+    #chat-message-submit {
+        background-color: #007bff; /* Button color, can be any color you like */
+        color: white; /* Text color */
+        padding: 10px 20px; /* Padding inside the button */
+        border: none; /* No border */
+        border-radius: 4px; /* Rounded corners */
+        cursor: pointer; /* Changes the cursor on hover */
+    }
+
+    /* Add some space between the two divs */
+    div.lg\:w-2\/3 {
+        margin-bottom: 20px; /* Adjust the space as needed */
+    }
+
+    .message {
+    background-color: #f2f2f2; /* Gray background */
+    padding: 10px; /* Some padding around the text */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 10px; /* Space between messages */
+    word-wrap: break-word; /* Ensures text breaks to prevent overflow */
+}
+
+
+    </style>
 {% endblock %}
