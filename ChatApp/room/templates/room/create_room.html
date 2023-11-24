@@ -1,0 +1,32 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %} Create Room | {% endblock %}
+
+{% block content %}
+<div class="p-10 lg:p-20 text-center">
+    <h1 class="text-3xl lg:text-6xl text-white">Create a New Room</h1>
+</div>
+
+<div class="w-full flex flex-wrap items-center">
+    <form method="post" action="{% url 'create_room' %}" class="w-full lg:w-1/2 px-3 py-3">
+        {% csrf_token %}
+        <div class="p-4 bg-white shadow rounded-xl text-center">
+            <label for="id_room_name" class="mb-2 block text-gray-800 text-sm font-semibold">Room Name:</label>
+            {{ form.room_name }}
+            {% if form.errors.room_name %}
+                <p class="text-red-500 text-sm mt-2">{{ form.errors.room_name }}</p>
+            {% endif %}
+            <button type="submit" class="mt-4 px-5 py-3 block rounded-xl text-white bg-teal-600 hover:bg-teal-700">Create Room</button>
+        </div>
+    </form>
+
+    {% for room in rooms %}
+        <div class="w-full lg:w-1/4 px-3 py-3">
+            <div class="p-4 bg-white shadow rounded-xl text-center">
+                <h2 class="mb-5 text-2xl font-semibold">Room: {{ room.name }}</h2>
+                <a href="{% url 'room_app:room' room.name %}" class="px-5 py-3 block rounded-xl text-white bg-teal-600 hover:bg-teal-700">Join</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

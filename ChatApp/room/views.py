@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Room, Message
+from .forms import OpenNewRoom
 
 from .models import Room
 
@@ -24,3 +25,19 @@ def room(request, room_name):
     
 
 # docker run --rm -p 6379:6379 redis:7
+@login_required
+def open_new_room(request):
+    if request.method == 'POST':
+        form = OpenNewRoom(request.POST)
+        if form.is_valid():
+            room_name = form.cleaned_data['room_name']
+            if not Room.objects.filter(name=room_name).exists():
+                room = Room(name=room_name, created_by=request.user)
+                room.save()
+                return redirect('room', room_name=room_name)
+            else:
+                form.add_error('room_name', 'A room with this name already exists.')
+    else:
+            form = OpenNewRoom()
+
+    return render(request, 'room/create_room.html', {'form': form})

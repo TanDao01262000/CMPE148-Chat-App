@@ -52,6 +52,18 @@
             }
         };
     </script>
-
+    <script>
+        document.querySelector('#open-room-button').onclick = function(e) {
+            // Perform the action you want when the button is clicked
+            // For example, show a form for creating a new room
+    
+            // In this example, I'm assuming you have a hidden form with the id 'create-room-form'
+            var createRoomForm = document.getElementById('create-room-form');
+            createRoomForm.style.display = 'block';  // Show the form
+    
+            // You might want to focus on a specific input in the form
+            createRoomForm.querySelector('#room-name-input').focus();
+        };
+    </script>
 </div>
 {% endblock %}
