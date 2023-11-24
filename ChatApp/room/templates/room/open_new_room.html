@@ -8,7 +8,7 @@
 </div>
 
 <div class="w-full flex flex-wrap items-center">
-    <form method="post" action="{% url 'open_new_room' %}" class="w-full lg:w-1/2 px-3 py-3">
+    <form method="post" action="{% url 'room_app:open_new_room' %}" class="w-full lg:w-1/2 px-3 py-3">
         {% csrf_token %}
         <div class="p-4 bg-white shadow rounded-xl text-center">
             <label for="id_room_name" class="mb-2 block text-gray-800 text-sm font-semibold">Room Name:</label>
