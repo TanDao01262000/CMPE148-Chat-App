@@ -34,7 +34,7 @@ def open_new_room(request):
             if not Room.objects.filter(name=room_name).exists():
                 room = Room(name=room_name, created_by=request.user)
                 room.save()
-                return redirect('room', room_name=room_name)
+                return redirect('room_app:room', room_name=room_name)
             else:
                 form.add_error('room_name', 'A room with this name already exists.')
     else:
