@@ -18,8 +18,8 @@
 
     <div class="btn-group" role="group" aria-label="Basic example">
         <a href="{% url 'room_app:rooms' %}" type="button" class="px-3 py-3 rounded-xl text-white bg-green-600 hover:bg-green-700">Rooms</a>
-        <a type="button" class="px-3 py-3 my-5 mx-5 rounded-xl text-white bg-green-600 hover:bg-green-700">Open your own room</a>
-    </div>
+        <a href="{% url 'room_app:open_new_room' %}" class="px-3 py-3 my-5 mx-5 rounded-xl text-white bg-green-600 hover:bg-green-700">Open your own room</a>
+
     </div>
     {% else %}
         <div class="card bg-dark text-white shadow-lg my-5">
@@ -52,6 +52,18 @@
             }
         };
     </script>
-
+    <script>
+        document.querySelector('#open-room-button').onclick = function(e) {
+            // Perform the action you want when the button is clicked
+            // For example, show a form for creating a new room
+    
+            // In this example, I'm assuming you have a hidden form with the id 'create-room-form'
+            var createRoomForm = document.getElementById('create-room-form');
+            createRoomForm.style.display = 'block';  // Show the form
+    
+            // You might want to focus on a specific input in the form
+            createRoomForm.querySelector('#room-name-input').focus();
+        };
+    </script>
 </div>
 {% endblock %}

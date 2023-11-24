@@ -10,11 +10,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = f"chat_{self.room_name}"
-
+        print(f"Connecting to room: {self.room_name}")
+       
         # Join room group
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 
         await self.accept()
+        print(f"Accepted connection to room: {self.room_name}")
 
     async def disconnect(self, close_code):
         # Leave room group
@@ -57,3 +59,4 @@ class ChatConsumer(AsyncWebsocketConsumer):
         user = User.objects.get(username=username)
         room = Room.objects.get(name=room)
         Message.objects.create(user=user, room=room, content=message)
+        print(f"Saved message in room: {room}")
