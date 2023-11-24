@@ -6,5 +6,5 @@ app_name = 'room_app'
 urlpatterns = [
     path("", views.rooms, name="rooms"),
     path("<str:room_name>", views.room, name="room"),
-    path('create_room/', open_new_room, name='create_room'),
+    path('open-new-room/', open_new_room, name='open_new_room'),
 ]

@@ -40,4 +40,4 @@ def open_new_room(request):
     else:
             form = OpenNewRoom()
 
-    return render(request, 'room/create_room.html', {'form': form})
+    return render(request, 'room/open_new_room.html', {'form': form})

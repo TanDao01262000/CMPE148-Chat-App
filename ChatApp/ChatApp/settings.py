@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'channels',
     'main_app',
     'room',
-    'rooms',
+
 ]
 
 MIDDLEWARE = [
