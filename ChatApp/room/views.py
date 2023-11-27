@@ -2,6 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Room, Message
 from .forms import OpenNewRoom
+from django.http import HttpResponse
+from django.contrib import messages
+
 
 from .models import Room
 
@@ -41,3 +44,16 @@ def open_new_room(request):
             form = OpenNewRoom()
 
     return render(request, 'room/open_new_room.html', {'form': form})
+
+@login_required
+def delete_room(request, room_id):
+    room = get_object_or_404(Room, id=room_id)
+    
+    # Check if the user has permission to delete the room
+    if request.user == room.created_by:
+        room.delete()
+        messages.success(request, f"Room '{room.name}' has been deleted successfully.")
+    else:
+        messages.error(request, "You don't have permission to delete this room.")
+    
+    return redirect('room_app:rooms')  # Redirect to the list of rooms
