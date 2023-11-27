@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Room, Message
 from .forms import OpenNewRoom
 from django.http import HttpResponse
+from django.contrib import messages
 
 
 from .models import Room
@@ -51,6 +52,8 @@ def delete_room(request, room_id):
     # Check if the user has permission to delete the room
     if request.user == room.created_by:
         room.delete()
-        return HttpResponse(f"Room {room.name} deleted successfully.")
+        messages.success(request, f"Room '{room.name}' has been deleted successfully.")
     else:
-        return HttpResponse("You don't have permission to delete this room.")
+        messages.error(request, "You don't have permission to delete this room.")
+    
+    return redirect('room_app:rooms')  # Redirect to the list of rooms
