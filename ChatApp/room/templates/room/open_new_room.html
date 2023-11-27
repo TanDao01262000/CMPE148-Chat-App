@@ -12,7 +12,7 @@
         {% csrf_token %}
         <div class="p-4 bg-white shadow rounded-xl text-center">
             <label for="id_room_name" class="mb-2 block text-gray-800 text-sm font-semibold">Room Name:</label>
-            {{ form.room_name }}
+            <input type="text" name="room_name" id="id_room_name" class="w-full border p-2 rounded-md">
             {% if form.errors.room_name %}
                 <p class="text-red-500 text-sm mt-2">{{ form.errors.room_name }}</p>
             {% endif %}
