@@ -10,6 +10,9 @@ class Room(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
 
+    def delete_msg(self):
+        self.delete()
+
     def __str__(self):
         return self.name
 
