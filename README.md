@@ -24,6 +24,7 @@ This is a simple real-time chat application built by Potato Power Team using Dja
   - [CSS](https://www.w3.org/Style/CSS/)
   - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
   - [sqlite](https://www.sqlite.org/index.html)
+  - [Docker](https://www.docker.com/)
 
 ## Prerequisites
 
@@ -32,6 +33,7 @@ Before running this application, ensure you have the following prerequisites ins
 - Python 3.9 or higher
 - Django
 - Channels
+- Docker
 - Redis (for WebSocket support)
 
 ## Getting Started
